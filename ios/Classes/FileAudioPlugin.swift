@@ -1,5 +1,6 @@
 import Flutter
 import UIKit
+import AVFoundation
 
 public class FileAudioPlugin: NSObject, FlutterPlugin, AVAudioPlayerDelegate {
 
