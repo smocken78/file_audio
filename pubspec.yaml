@@ -1,7 +1,7 @@
 name: file_audio
-description: A plugin for playing audio files.
+description: A plugin for playing audio and asset files.
 version: 0.0.1
-homepage:
+homepage: https://github.com/smocken78/file_audio
 
 environment:
   sdk: '>=2.19.3 <3.0.0'
