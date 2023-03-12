@@ -13,8 +13,8 @@ class MethodChannelFileAudio extends FileAudioPlatform {
   Future<void> start(String path) async {
     try {
       await methodChannel.invokeMethod("start", path);
-    } on PlatformException catch (e) {
-      print("Stream start error : $e");
+    } on PlatformException {
+      //print("Stream start error : $e");
     }
   }
 
@@ -22,8 +22,8 @@ class MethodChannelFileAudio extends FileAudioPlatform {
   Future<void> stop() async {
     try {
       await methodChannel.invokeMethod("stop");
-    } on PlatformException catch (e) {
-      print("Stream stop error : $e");
+    } on PlatformException {
+      //print("Stream stop error : $e");
     }
   }
 
@@ -31,8 +31,8 @@ class MethodChannelFileAudio extends FileAudioPlatform {
   Future<void> pause() async {
     try {
       await methodChannel.invokeMethod("pause");
-    } on PlatformException catch (e) {
-      print("Stream pause error : $e");
+    } on PlatformException {
+      //print("Stream pause error : $e");
     }
   }
 
@@ -40,8 +40,8 @@ class MethodChannelFileAudio extends FileAudioPlatform {
   Future<void> resume() async {
     try {
       await methodChannel.invokeMethod("resume");
-    } on PlatformException catch (e) {
-      print("Stream resume error : $e");
+    } on PlatformException {
+      //print("Stream resume error : $e");
     }
   }
 }
