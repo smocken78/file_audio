@@ -23,7 +23,7 @@ abstract class FileAudioPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<void> start(String path) async {
+  Future<void> start(Map<String, dynamic> args) async {
     throw UnimplementedError('start(String path) has not been implemented.');
   }
 

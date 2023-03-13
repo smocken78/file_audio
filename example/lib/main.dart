@@ -16,7 +16,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  FileAudio player = FileAudio();
+  FileAudio player = FileAudio(duckOthers: false);
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +59,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> start() async {
-    final ByteData data = await rootBundle.load('assets/synthesized-audio.mp3');
+    final ByteData data = await rootBundle.load('assets/5To0.mp3');
     Directory tempDir = await getApplicationDocumentsDirectory();
-    File tempFile = File('${tempDir.path}/demo.mp3');
+    File tempFile = File('${tempDir.path}/5To0.mp3');
     await tempFile.writeAsBytes(data.buffer.asUint8List(), flush: true);
     String mp3Uri = tempFile.uri.toString();
 

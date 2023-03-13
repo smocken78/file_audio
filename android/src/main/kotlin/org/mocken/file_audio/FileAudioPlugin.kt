@@ -57,7 +57,8 @@ class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
     when (action) {
       "start" -> {
         if (call.arguments != null) {
-          val url = call.arguments.toString()
+          val url = call.argument<String>("path") 
+          val duckOthers = call.argument<Boolean>("duckOthers") ?: false
           initializePlayer(url)
           startPlayer()
         } else {
