@@ -56,9 +56,9 @@ class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
 
     when (action) {
       "start" -> {
-        if (call.arguments != null) {
-          val url = call.argument<String>("path") 
-          val duckOthers = call.argument<Boolean>("duckOthers") ?: false
+        if (call.argument<String>("path") != null) {
+          val url = call.argument<String>("path")!!
+          val duckOthers = call.argument<Boolean>("duckOthers")!!
           initializePlayer(url)
           startPlayer(duckOthers)
         } else {
@@ -106,7 +106,7 @@ class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
     }
   }
 
-  private fun startPlayer(Boolean duckOthers) {
+  private fun startPlayer(duckOthers: Boolean) {
     try {
       if (player != null) {
         requestFocus(duckOthers)
@@ -134,7 +134,7 @@ class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
     }
   }
 
-  private fun requestFocus(Boolean duckOthers) {
+  private fun requestFocus(duckOthers: Boolean) {
     if (VERSION.SDK_INT >= Build.VERSION_CODES.O) {
       try {
         val mPlaybackAttributes = AudioAttributes.Builder()
@@ -142,19 +142,20 @@ class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
                 .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
                 .build()
 
-        val _localAudioFocusRequest;
-
-        if (duckOthers)        
-          _localAudioFocusRequest = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
-                  .setAudioAttributes(mPlaybackAttributes)
-                  .setOnAudioFocusChangeListener { }
-                  .build()
-        else
-          _localAudioFocusRequest = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
-                  .setAudioAttributes(mPlaybackAttributes)
-                  .setOnAudioFocusChangeListener { }
-                  .build()
-
+        if (duckOthers) {   
+          audioFocusRequest = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+          .setAudioAttributes(mPlaybackAttributes)
+          .setOnAudioFocusChangeListener { }
+          .build()
+        }
+        else {
+          audioFocusRequest = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
+          .setAudioAttributes(mPlaybackAttributes)
+          .setOnAudioFocusChangeListener { }
+          .build()
+        }
+        
+        val _localAudioFocusRequest = audioFocusRequest;
         
         if (_localAudioFocusRequest != null) {
           audioManager?.requestAudioFocus(_localAudioFocusRequest)
