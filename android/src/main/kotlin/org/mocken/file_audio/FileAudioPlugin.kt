@@ -60,7 +60,7 @@ class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
           val url = call.argument<String>("path") 
           val duckOthers = call.argument<Boolean>("duckOthers") ?: false
           initializePlayer(url)
-          startPlayer()
+          startPlayer(duckOthers)
         } else {
           result.error("no file", null, null)
         }
@@ -106,10 +106,10 @@ class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
     }
   }
 
-  private fun startPlayer() {
+  private fun startPlayer(Boolean duckOthers) {
     try {
       if (player != null) {
-        requestFocus()
+        requestFocus(duckOthers)
         player?.prepareAsync()
         player?.setOnPreparedListener {
           try {
@@ -134,19 +134,27 @@ class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
     }
   }
 
-  private fun requestFocus() {
+  private fun requestFocus(Boolean duckOthers) {
     if (VERSION.SDK_INT >= Build.VERSION_CODES.O) {
       try {
         val mPlaybackAttributes = AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_MEDIA)
                 .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
                 .build()
-        audioFocusRequest = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
-                .setAudioAttributes(mPlaybackAttributes)
-                .setOnAudioFocusChangeListener { }
-                .build()
-        
-        val _localAudioFocusRequest = audioFocusRequest;
+
+        val _localAudioFocusRequest;
+
+        if (duckOthers)        
+          _localAudioFocusRequest = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+                  .setAudioAttributes(mPlaybackAttributes)
+                  .setOnAudioFocusChangeListener { }
+                  .build()
+        else
+          _localAudioFocusRequest = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT)
+                  .setAudioAttributes(mPlaybackAttributes)
+                  .setOnAudioFocusChangeListener { }
+                  .build()
+
         
         if (_localAudioFocusRequest != null) {
           audioManager?.requestAudioFocus(_localAudioFocusRequest)
