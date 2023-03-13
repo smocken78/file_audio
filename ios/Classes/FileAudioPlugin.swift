@@ -20,8 +20,13 @@ public class FileAudioPlugin: NSObject, FlutterPlugin, AVAudioPlayerDelegate {
         
         if (action == "start") {
             if (call.arguments != nil){
-                let url : String = call.arguments as! String
-                start(filePath : url)
+                guard let args = call.arguments as? [String: Any] else {
+                  print("Failed to parse call.arguments from Flutter.")
+                  return
+                }
+                let url : String = args["path"] as! String
+                let duckOthers : Bool = args["duckOthers"] as! Bool
+                start(filePath : url, duck: duckOthers)
             } else {
                 print("no file")
                 self.flutterResult!(false)
@@ -35,14 +40,23 @@ public class FileAudioPlugin: NSObject, FlutterPlugin, AVAudioPlayerDelegate {
         }
     }
     
-    private func start(filePath: String){
+    private func start(filePath: String, duck: Bool){
         let url = URL(string: filePath)
-        let avopts:AVAudioSession.CategoryOptions  = [
-		      .mixWithOthers,
-		      .duckOthers,
-		      .interruptSpokenAudioAndMixWithOthers
-	      ]
-        
+        let avopts:AVAudioSession.CategoryOptions
+
+        if (duck) {
+          avopts = [
+            .mixWithOthers,
+            .duckOthers,
+            .interruptSpokenAudioAndMixWithOthers
+          ]
+        }
+        else {
+          avopts = [
+            .mixWithOthers
+          ]
+        }
+
         if (url != nil){
           do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback, options: avopts)

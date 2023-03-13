@@ -10,9 +10,9 @@ class MethodChannelFileAudio extends FileAudioPlatform {
   final methodChannel = const MethodChannel('file_audio');
 
   @override
-  Future<void> start(String path) async {
+  Future<void> start(Map<String, dynamic> args) async {
     try {
-      await methodChannel.invokeMethod("start", path);
+      await methodChannel.invokeMethod("start", args);
     } on PlatformException {
       //print("Stream start error : $e");
     }

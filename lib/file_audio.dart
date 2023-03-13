@@ -6,8 +6,12 @@ import 'package:path_provider/path_provider.dart';
 import 'file_audio_platform_interface.dart';
 
 class FileAudio {
-  FileAudio();
   final Map<String, File> _assetCache = <String, File>{};
+  final bool duckOthers;
+
+  FileAudio({
+    this.duckOthers = true,
+  });
 
   loadAssets(List<String> fileNames) async {
     for (var element in fileNames) {
@@ -35,11 +39,14 @@ class FileAudio {
   }
 
   Future<void> playAsset(String asset) async {
-    FileAudioPlatform.instance.start(_assetCache[asset]!.path);
+    start(_assetCache[asset]!.path);
   }
 
   Future<void> start(String path) async {
-    FileAudioPlatform.instance.start(path);
+    Map<String, dynamic> args = <String, dynamic>{};
+    args["path"] = path;
+    args["duckOthers"] = duckOthers;
+    FileAudioPlatform.instance.start(args);
   }
 
   Future<void> stop() async {
