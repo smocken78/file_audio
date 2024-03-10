@@ -1,22 +1,22 @@
 name: file_audio
-description: A plugin for playing audio and asset files.
-version: 0.0.2
+description: A plugin for playing audio files and asset files with ducking support for iOS and Android.
+version: 0.0.3
 homepage: https://github.com/smocken78/file_audio
 
 environment:
-  sdk: '>=2.19.3 <3.0.0'
-  flutter: ">=2.5.0"
+  sdk: '>=3.2.0 <4.0.0'
+  flutter: ">=3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  plugin_platform_interface: ^2.0.2
-  path_provider: ^2.0.13
+  plugin_platform_interface: ^2.1.8
+  path_provider: ^2.1.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

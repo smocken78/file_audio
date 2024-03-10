@@ -5,3 +5,7 @@
 ## 0.0.2
 
 * Added optional parameter to FileAudio constructor to disable ducking. By default other audio is ducked
+
+## 0.0.3
+
+* Documentation and some small bugfixes to enhance pub points

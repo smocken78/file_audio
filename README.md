@@ -1,6 +1,6 @@
 # file_audio
 
-An audio player with ducking support for local and asset files. 
+A plugin for playing audio files and asset files with ducking support for iOS and Android. 
 
 Link to pub.dev package: [flie_audio](https://pub.dev/packages/file_audio)
 
