@@ -9,3 +9,7 @@
 ## 0.0.3
 
 * Documentation and some small bugfixes to enhance pub points
+
+## 0.0.4
+
+* Fix formatting issue

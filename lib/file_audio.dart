@@ -6,8 +6,9 @@ import 'package:path_provider/path_provider.dart';
 import 'file_audio_platform_interface.dart';
 
 class FileAudio {
-  ///cache Map for faster access to asset files 
+  ///cache Map for faster access to asset files
   final Map<String, File> _assetCache = <String, File>{};
+
   ///enable ducking support default:true
   final bool duckOthers;
 

@@ -1,6 +1,6 @@
 name: file_audio
 description: A plugin for playing audio files and asset files with ducking support for iOS and Android.
-version: 0.0.3
+version: 0.0.4
 homepage: https://github.com/smocken78/file_audio
 
 environment:
