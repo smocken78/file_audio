@@ -65,11 +65,9 @@ class _MyAppState extends State<MyApp> {
     await tempFile.writeAsBytes(data.buffer.asUint8List(), flush: true);
     String mp3Uri = tempFile.uri.toString();
 
-    print("start");
 
     await player.start(mp3Uri);
 
-    print("end");
   }
 
   Future<void> stop() async {
