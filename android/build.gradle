@@ -22,10 +22,6 @@ rootProject.allprojects {
     }
 }
 
-project.getTasks().withType(JavaCompile) {
-    options.compilerArgs.addAll(["-Xlint:deprecation","-Xlint:unchecked"])
-}
-
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
