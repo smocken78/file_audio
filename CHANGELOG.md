@@ -13,3 +13,7 @@
 ## 0.0.4
 
 * Fix formatting issue
+
+## 0.0.5
+
+* Upgrade Android build
