@@ -4,7 +4,10 @@ import 'file_audio_method_channel.dart';
 
 abstract class FileAudioPlatform extends PlatformInterface {
   /// Constructs a FileAudioPlatform.
-  FileAudioPlatform() : super(token: _token);
+  FileAudioPlatform()
+      : super(
+          token: _token,
+        );
 
   static final Object _token = Object();
 

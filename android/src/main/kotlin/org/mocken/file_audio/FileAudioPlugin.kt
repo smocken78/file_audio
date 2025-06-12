@@ -1,14 +1,10 @@
 package org.mocken.file_audio
 
-import androidx.annotation.NonNull
-
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.PluginRegistry.Registrar
-
 import android.content.Context
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
@@ -17,39 +13,30 @@ import android.media.MediaPlayer
 import android.os.Build
 import android.os.Build.VERSION
 import java.io.IOException
+import androidx.annotation.NonNull
+
 
 /** FileAudioPlugin */
 class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
-
+  /// The MethodChannel that will the communication between Flutter and native Android
+  ///
+  /// This local reference serves to register the plugin with the Flutter Engine and unregister it
+  /// when the Flutter Engine is detached from the Activity
   private lateinit var channel : MethodChannel
-  private lateinit var result: Result
-
+  private var audioManager: AudioManager? = null
   private var player: MediaPlayer? = null
   private var audioFocusRequest: AudioFocusRequest? = null
+  private lateinit var result: Result
 
-  override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+  override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "file_audio")
-
     audioManager = flutterPluginBinding.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
     channel.setMethodCallHandler(this)
   }
 
- companion object {
+  override fun onMethodCall(call: MethodCall, result: Result) {
 
-    @JvmStatic var audioManager: AudioManager? = null
-
-    @JvmStatic
-    fun registerWith(registrar: Registrar) {
-      val channel = MethodChannel(registrar.messenger(), "file_audio")
-
-      audioManager = registrar.activeContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager
-
-      channel.setMethodCallHandler(FileAudioPlugin())
-    }
-  }
-
-  override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
     this.result = result
 
     val action = call.method
@@ -69,13 +56,14 @@ class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
       "pause" -> pausePlayer()
       else -> resumePlayer()
     }
+
   }
 
-  override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+  override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
     channel.setMethodCallHandler(null)
   }
 
-  private fun initializePlayer(url: String) {
+ private fun initializePlayer(url: String) {
     try {
       if (player != null) {
         player?.stop()
@@ -222,5 +210,6 @@ class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
     e.printStackTrace()
     abandonFocus()
     result.error("Error occured", e.message, e.cause)
-  }  
+  }
+
 }

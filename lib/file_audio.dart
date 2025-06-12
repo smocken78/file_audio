@@ -17,7 +17,7 @@ class FileAudio {
   });
 
   ///Method creates a cache from List of given assets (e.g. assets/5to0.mp3)
-  loadAssets(List<String> fileNames) async {
+  Future<void> loadAssets(List<String> fileNames) async {
     for (var element in fileNames) {
       File f = await _fetchToMemory(element);
       _assetCache[element] = f;
@@ -25,7 +25,7 @@ class FileAudio {
   }
 
   ///deletes all cache entries
-  cleanUp() async {
+  Future<void> cleanUp() async {
     for (var element in _assetCache.keys) {
       _assetCache[element]!.delete();
     }
