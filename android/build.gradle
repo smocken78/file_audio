@@ -3,6 +3,9 @@ version = "1.0-SNAPSHOT"
 
 buildscript {
     ext.kotlin_version = "2.1.0"
+    ext {
+        agp_version = '8.5.2'
+    }
     repositories {
         google()
         mavenCentral()
@@ -40,11 +43,11 @@ android {
 
     sourceSets {
         main.java.srcDirs += "src/main/kotlin"
-        test.java.srcDirs += "src/test/kotlin"
+        //test.java.srcDirs += "src/test/kotlin"
     }
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 26
     }
 
     dependencies {
