@@ -23,7 +23,7 @@ class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
   /// when the Flutter Engine is detached from the Activity
   private lateinit var channel : MethodChannel
-  @JvmStatic private var audioManager: AudioManager? = null
+  private var audioManager: AudioManager? = null
   private var player: MediaPlayer? = null
   private var audioFocusRequest: AudioFocusRequest? = null
   private lateinit var result: Result
