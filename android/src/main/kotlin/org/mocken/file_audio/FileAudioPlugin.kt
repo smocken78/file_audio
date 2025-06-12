@@ -7,7 +7,6 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.PluginRegistry.Registrar
 
 import android.content.Context
 import android.media.AudioAttributes
@@ -23,7 +22,7 @@ class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
 
   private lateinit var channel : MethodChannel
   private lateinit var result: Result
-
+  @JvmStatic private var audioManager: AudioManager? = null
   private var player: MediaPlayer? = null
   private var audioFocusRequest: AudioFocusRequest? = null
 
@@ -33,20 +32,6 @@ class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
     audioManager = flutterPluginBinding.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
 
     channel.setMethodCallHandler(this)
-  }
-
- companion object {
-
-    @JvmStatic var audioManager: AudioManager? = null
-
-    @JvmStatic
-    fun registerWith(registrar: Registrar) {
-      val channel = MethodChannel(registrar.messenger(), "file_audio")
-
-      audioManager = registrar.activeContext().getSystemService(Context.AUDIO_SERVICE) as AudioManager
-
-      channel.setMethodCallHandler(FileAudioPlugin())
-    }
   }
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
