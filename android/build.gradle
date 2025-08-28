@@ -1,5 +1,5 @@
 group = "org.mocken.file_audio"
-version = "0.0.5"
+version = "0.0.6"
 
 buildscript {
     ext.kotlin_version = "2.1.0"
@@ -24,10 +24,32 @@ allprojects {
 apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
+def flutterMinSdkVersion = localProperties.getProperty("flutter.minSdkVersion")
+if (flutterMinSdkVersion == null) {
+    flutterMinSdkVersion = "24"
+}
+
+def flutterTargetSdkVersion = localProperties.getProperty("flutter.targetSdkVersion")
+if (flutterTargetSdkVersion == null) {
+    flutterTargetSdkVersion = "36"
+}
+
+def flutterCompileSdkVersion = localProperties.getProperty("flutter.compileSdkVersion")
+if (flutterCompileSdkVersion == null) {
+    flutterCompileSdkVersion = 36
+}
+
+def flutterNdkVersion = localProperties.getProperty("flutter.ndkVersion")
+if (flutterNdkVersion == null) {
+    flutterNdkVersion = "29.0.13113456"
+}
+
 android {
     namespace = "org.mocken.file_audio"
 
-    compileSdk = 35
+    compileSdk = flutterCompileSdkVersion
+    ndkVersion = flutterNdkVersion
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
@@ -44,7 +66,7 @@ android {
     }
 
     defaultConfig {
-        minSdk = 21
+        minSdk = flutterMinSdkVersion
     }
 
     dependencies {
