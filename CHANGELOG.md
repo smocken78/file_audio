@@ -17,3 +17,7 @@
 ## 0.0.5
 
 * Upgrade Android build
+
+## 0.1.0
+
+* Add SPM support and update deprecated code
