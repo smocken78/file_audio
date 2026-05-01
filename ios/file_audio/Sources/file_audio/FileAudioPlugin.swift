@@ -7,7 +7,13 @@ public class FileAudioPlugin: NSObject, FlutterPlugin, AVAudioPlayerDelegate {
   private var audioPlayer: AVAudioPlayer?
   private var flutterResult: FlutterResult?
   public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "file_audio", binaryMessenger: registrar.messenger)
+    #if canImport(FlutterFramework)
+      let messenger = registrar.messenger
+    #else
+      let messenger: FlutterBinaryMessenger = registrar.messenger()
+    #endif
+
+    let channel = FlutterMethodChannel(name: "file_audio", binaryMessenger: messenger)
     let instance = FileAudioPlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
