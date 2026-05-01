@@ -22,7 +22,7 @@ AVAudioSession ducking support on iOS and AudioFocus management on Android.
 
   s.dependency 'Flutter'
 
-  s.ios.deployment_target = '14.0'
+  s.ios.deployment_target = '13.0'
   s.swift_version         = '5.9'
 
   s.pod_target_xcconfig = {
