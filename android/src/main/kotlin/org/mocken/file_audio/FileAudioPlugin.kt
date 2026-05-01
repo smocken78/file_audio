@@ -10,8 +10,6 @@ import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.MediaPlayer
-import android.os.Build
-import android.os.Build.VERSION
 import java.io.IOException
 import androidx.annotation.NonNull
 
@@ -74,14 +72,12 @@ class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
 
       player = MediaPlayer()
 
-      if (VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-        player?.setAudioAttributes(AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_MEDIA)
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .build())
-      } else {
-        player?.setAudioStreamType(AudioManager.STREAM_SYSTEM)
-      }
+      player?.setAudioAttributes(
+        AudioAttributes.Builder()
+          .setUsage(AudioAttributes.USAGE_MEDIA)
+          .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+          .build()
+      )
 
       player?.setDataSource(url)
 
@@ -123,7 +119,7 @@ class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
   }
 
   private fun requestFocus(duckOthers: Boolean) {
-    if (VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
       try {
         val mPlaybackAttributes = AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_MEDIA)
@@ -156,7 +152,7 @@ class FileAudioPlugin: FlutterPlugin, MethodCallHandler {
 
   private fun abandonFocus() {
     try {
-      if (VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
         val _localAudioFocusRequest = audioFocusRequest;
         if (_localAudioFocusRequest != null) {
           audioManager?.abandonAudioFocusRequest(_localAudioFocusRequest)
