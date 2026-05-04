@@ -21,3 +21,7 @@
 ## 0.1.0
 
 * Add SPM support and update deprecated code
+
+## 0.1.1
+
+* fix build gradle to work with higher agp version
